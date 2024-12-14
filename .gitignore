@@ -31,3 +31,4 @@
 *.out
 *.app
 examples/classes/die/snakeeyes
+examples/classes/pen/pendriver
