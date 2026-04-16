@@ -1,66 +1,36 @@
-#include "sorting.hpp"
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <vector>
+#include <random>
+#include "Sorting.h"
 
-enum class SortType { SELECTION, INSERTION, BUBBLE, MERGE, QUICK };
+enum SortType { SELECTION, INSERTION, BUBBLE, MERGE, QUICK };
 
-void printArray(int arr[], const int n) {
-    for (int ii = 0; ii < n; ii++) {
-        std::cout << arr[ii] << " ";
-    }
-    std::cout << "\n";
-}
+void printArray(const std::vector<int>& a);
 
 int main() {
-    const int size = 10;
-    int a[size];
+    std::vector<int> a(100);
+    std::mt19937 rand(std::random_device{}());
+    std::uniform_int_distribution<> dis(0, 999);
+
     int failures = 0;
+    SortType sortType = INSERTION;
 
-    std::srand(static_cast<unsigned>(std::time(nullptr)));
-
-    SortType sortTypes[] = { SortType::SELECTION, SortType::INSERTION, 
-                             SortType::BUBBLE, SortType::MERGE, SortType::QUICK };
-    const int numSorts = sizeof(sortTypes) / sizeof(sortTypes[0]);
-
-    for (int ii = 0; ii < numSorts; ii++) {
-        for (int jj = 0; jj < size; jj++) {
-            a[jj] = std::rand() % 1000;
+    for (int kk = 0; kk < 500; kk++) {
+        for (int ii = 0; ii < a.size(); ii++) {
+            a[ii] = dis(rand);
         }
 
-        std::cout << "\nTesting ";
-        switch (sortTypes[ii]) {
-            case SortType::SELECTION: std::cout << "Selection Sort"; break;
-            case SortType::INSERTION: std::cout << "Insertion Sort"; break;
-            case SortType::BUBBLE: std::cout << "Bubble Sort"; break;
-            case SortType::MERGE: std::cout << "Merge Sort"; break;
-            case SortType::QUICK: std::cout << "Quick Sort"; break;
-        }
-        std::cout << ":\nUnsorted: ";
-        printArray(a, size);
+        std::cout << "\nUnsorted: ";
+        printArray(a);
 
-        switch (sortTypes[ii]) {
-            case SortType::SELECTION:
-                Sorting::selectionSort(a, size);
-                break;
-            case SortType::INSERTION:
-                Sorting::insertionSort(a, size);
-                break;
-            case SortType::BUBBLE:
-                Sorting::bubbleSort(a, size);
-                break;
-            case SortType::MERGE:
-                Sorting::mergeSort(a, 0, size - 1); 
-                break;
-            case SortType::QUICK:
-                Sorting::quickSort(a, 0, size - 1);
-                break;
+        if (sortType == INSERTION) {
+            Sorting::insertionSort(a);
         }
 
         std::cout << "  Sorted: ";
-        printArray(a, size);
+        printArray(a);
 
-        if (!Sorting::isSorted(a, size)) {
+        if (!Sorting::isSorted(a)) {
             std::cout << "Fail!\n";
             failures++;
         }
@@ -68,10 +38,17 @@ int main() {
 
     std::cout << "\n";
     if (failures == 0) {
-        std::cout << "All tests successful! (" << failures << " failures)\n";
+        std::cout << "Test successful! (" << failures << " failures)\n";
     } else {
-        std::cout << "Tests unsuccessful! (" << failures << " failures)\n";
+        std::cout << "Test unsuccessful! (" << failures << " failures)\n";
     }
 
     return 0;
+}
+
+void printArray(const std::vector<int>& a) {
+    for (int ii = 0; ii < a.size(); ii++) {
+        std::cout << a[ii] << " ";
+    }
+    std::cout << "\n";
 }
