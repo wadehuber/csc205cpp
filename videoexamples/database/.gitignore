@@ -1,0 +1,8 @@
+# Built programs
+sqlitetest
+sqlitetest.exe
+databaseexample
+databaseexample.exe
+
+# Generated database file
+csc205.db

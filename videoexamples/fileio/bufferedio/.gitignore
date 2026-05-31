@@ -1,0 +1,7 @@
+# Generated output and built binaries
+/output.txt
+consoleinput
+output
+reader
+writer
+*.exe
