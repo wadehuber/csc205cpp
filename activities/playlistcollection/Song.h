@@ -1,0 +1,22 @@
+#ifndef SONG_H
+#define SONG_H
+
+#include <string>
+
+class Song {
+private:
+    std::string title;
+    std::string artist;
+    int duration; // in seconds
+
+public:
+    Song(std::string title, std::string artist, int duration);
+
+    std::string getTitle() const;
+    std::string getArtist() const;
+    int getDuration() const;
+
+    std::string toString() const;
+};
+
+#endif
